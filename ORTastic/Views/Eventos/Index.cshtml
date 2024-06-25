@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ORTastic.Models.Evento>
+
+@{
+    ViewData["Title"] = "Administrar Eventos";
+}
+
+<h1>Administrar Eventos</h1>
+
+<p>
+    <a asp-action="Create">Crear Evento Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+             Nombre del Evento
+            </th>
+            <th>
+              Fecha y Hora
+            </th>
+            <th>
+              Equipos
+            </th>
+            <th>
+             Precio
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombreevento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Equipos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -29,6 +29,7 @@ namespace ORTastic.Controllers
                 {
                     //establezca sesion y guarde en username el username
                     HttpContext.Session.SetInt32("tipoPerfil", (int)loggedInUser.tipoPerfil);
+                    HttpContext.Session.SetInt32("IdUsuario", (int)loggedInUser.Id);
 
                     // si no estoy logeado se va al index de mi home
                     return RedirectToAction("Index", "Home");

@@ -2,8 +2,8 @@
 {
     public enum Perfil
     {
-        ADMINISTRADOR,
+        CLIENTE,
         EMPLEADO,
-        CLIENTE
+        ADMINISTRADOR
     }
 }

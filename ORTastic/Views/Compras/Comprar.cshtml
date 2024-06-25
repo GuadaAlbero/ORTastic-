@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ORTastic.Models.Evento>
+@{
+    ViewData["Title"] = "Realizar Compra";
+    ViewData["IdUsuario"] = Context.Session.GetInt32("IdUsuario");
+}
+
+<h1>Realizar Compra</h1>
+
+
+
+<form asp-action="Create">
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    IdEvento
+                </th>
+                <th>
+                    Nombre del Evento
+                </th>
+                <th>
+                    Fecha y  Hora
+                </th>
+                <th>
+                    Equipos
+                </th>
+                <th>
+                    Precio
+                </th>
+
+                <th>
+                    <label>Cantidad de Entradas</label>
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Id)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Nombreevento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Equipos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Precio)
+
+                    </td>
+
+                    <td>
+                        <input type="number" min="1" max="5">
+                    </td>
+                    <td>
+
+                        <div class="form-group">
+                            <input type="submit" value="Comprar" class="btn btn-primary" />
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+

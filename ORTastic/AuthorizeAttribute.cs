@@ -6,17 +6,14 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        //guardo en username el valor que se encuentra en username de mi sesion
-        var username = context.HttpContext.Session.GetString("Username");
+        //guardo el tipoPerfil para ver si esta logeado el usuario
+        var tipoPerfil = context.HttpContext.Session.GetInt32("tipoPerfil");
 
-        if (!string.IsNullOrEmpty(username))
-        {
-
+        if (tipoPerfil == null) { 
+            context.Result = new RedirectToActionResult("Login", "Account", null); 
         }
-        else {
-            context.Result = new RedirectToActionResult("Login", "Account", null);
-        }
-
+        
+   
         base.OnActionExecuting(context);
     }
 

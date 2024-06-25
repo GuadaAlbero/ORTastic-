@@ -1,0 +1,28 @@
+﻿/* auth.css */
+body {
+    background: url('https://via.placeholder.com/1500x1000') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.card {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-primary {
+    background-color: #d9534f;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #c9302c;
+    }
+
+.btn-secondary {
+    background-color: #5bc0de;
+    border: none;
+}
+
+    .btn-secondary:hover {
+        background-color: #31b0d5;
+    }

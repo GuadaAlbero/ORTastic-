@@ -13,5 +13,10 @@ namespace ORTastic.Context
 
         //creo tabla usuario con los atributos de mi modelo user
         public DbSet<User> Usuarios { get; set; }
+
+        public DbSet<Evento> Eventos { get; set; }
+
+        public DbSet<Compra> Compras { get; set; }
+
     }
 }

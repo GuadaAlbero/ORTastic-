@@ -19,5 +19,8 @@ namespace ORTastic.Models
 
         [EnumDataType(typeof(Perfil))]
         public Perfil tipoPerfil { get; set; }
+
+        // Relación uno a muchos con Compras
+       // public virtual ICollection<Compra> Compras { get; set; }
     }
 }

@@ -1,18 +1,47 @@
 ﻿@model ORTastic.Models.User
 
-<h2>Login</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - ORTastic</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/auth.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-header text-center text-white" style="background-color: #d9534f;">
+                        <h2>Inicio de Sesión - ORTastic</h2>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Login" method="post">
+                            <div class="form-group">
+                                <label asp-for="Username">Nombre de Usuario</label>
+                                <input asp-for="Username" class="form-control" placeholder="Ingrese su nombre de usuario" />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password">Contraseña</label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Ingrese su contraseña" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="https://localhost:7211/Account/Register" class="btn btn-secondary btn-block">Registrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
-<form asp-action="Login" method="post">
-    <div class="form-group">
-        <label asp-for="Username"></label>
-        <input asp-for="Username" class="form-control" />
-        <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
-<a href="https://localhost:7211/Account/Register"><button>Registrar</button></a>
+
+
+
