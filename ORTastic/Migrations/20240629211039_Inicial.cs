@@ -20,7 +20,8 @@ namespace ORTastic.Migrations
                     Nombreevento = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Equipos = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Precio = table.Column<float>(type: "real", nullable: false)
+                    Precio = table.Column<float>(type: "real", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,7 +50,6 @@ namespace ORTastic.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    UsuariosId = table.Column<int>(type: "int", nullable: false),
                     EventoId = table.Column<int>(type: "int", nullable: false),
                     PrecioTotal = table.Column<float>(type: "real", nullable: false)
                 },
@@ -63,8 +63,8 @@ namespace ORTastic.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Compras_Usuarios_UsuariosId",
-                        column: x => x.UsuariosId,
+                        name: "FK_Compras_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -76,9 +76,9 @@ namespace ORTastic.Migrations
                 column: "EventoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Compras_UsuariosId",
+                name: "IX_Compras_UsuarioId",
                 table: "Compras",
-                column: "UsuariosId");
+                column: "UsuarioId");
         }
 
         /// <inheritdoc />

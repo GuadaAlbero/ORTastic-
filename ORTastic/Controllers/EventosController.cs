@@ -46,6 +46,7 @@ namespace ORTastic.Controllers
         // GET: Eventos/Create
         public IActionResult Create()
         {
+          
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace ORTastic.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombreevento,Fecha,Equipos,Precio")] Evento evento)
+        public async Task<IActionResult> Create([Bind("Id,Nombreevento,Fecha,Equipos,Precio,Stock")] Evento evento)
         {
             if (ModelState.IsValid)
             {

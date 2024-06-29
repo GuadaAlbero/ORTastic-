@@ -53,11 +53,11 @@ namespace ORTastic.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UsuarioId,UsuariosId,EventoId,Precio")] Compra compra)
+        public async Task<IActionResult> Create([Bind("Id,UsuarioId,EventoId,Precio")] Compra compra)
         {
             if (ModelState.IsValid)
             {
-                // compra.UsuarioId = Context.session.GetInt32("IdUsuario");
+                compra.UsuarioId = HttpContext.Session.GetInt32("IdUsuario").Value;
                 _context.Add(compra);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

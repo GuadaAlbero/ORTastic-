@@ -39,14 +39,11 @@ namespace ORTastic.Migrations
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuariosId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EventoId");
 
-                    b.HasIndex("UsuariosId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Compras");
                 });
@@ -72,6 +69,9 @@ namespace ORTastic.Migrations
 
                     b.Property<float>("Precio")
                         .HasColumnType("real");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -105,30 +105,20 @@ namespace ORTastic.Migrations
             modelBuilder.Entity("ORTastic.Models.Compra", b =>
                 {
                     b.HasOne("ORTastic.Models.Evento", "Eventos")
-                        .WithMany("Compras")
+                        .WithMany()
                         .HasForeignKey("EventoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ORTastic.Models.User", "Usuarios")
-                        .WithMany("Compras")
-                        .HasForeignKey("UsuariosId")
+                    b.HasOne("ORTastic.Models.User", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Eventos");
 
-                    b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("ORTastic.Models.Evento", b =>
-                {
-                    b.Navigation("Compras");
-                });
-
-            modelBuilder.Entity("ORTastic.Models.User", b =>
-                {
-                    b.Navigation("Compras");
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,15 +1,13 @@
 ﻿@model IEnumerable<ORTastic.Models.Evento>
 @{
     ViewData["Title"] = "Realizar Compra";
-    ViewData["IdUsuario"] = Context.Session.GetInt32("IdUsuario");
 }
 
 <h1>Realizar Compra</h1>
 
 
 
-<form asp-action="Create">
-
+<form asp-action="Create" method="post">
 
     <table class="table">
         <thead>
@@ -65,11 +63,18 @@
                         <input type="number" min="1" max="5">
                     </td>
                     <td>
-
-                        <div class="form-group">
-                            <input type="submit" value="Comprar" class="btn btn-primary" />
-                        </div>
-
+                        @if (item.Stock > 0)
+                        {
+                            <div class="form-group">
+                                <input type="hidden" name="EventoId" value="@item.Id">
+                                <input type="hidden" name="Precio" value="@item.Precio">
+                                <input type="submit" value="Comprar" class="btn btn-primary" />
+                            </div>
+                        }
+                        else
+                        {
+                            <span style="color: red"> AGOTADO </span>
+                        }
                     </td>
                 </tr>
             }

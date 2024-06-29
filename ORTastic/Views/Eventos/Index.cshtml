@@ -24,6 +24,9 @@
             <th>
              Precio
             </th>
+            <th>
+                Stock
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,6 +45,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Precio)
             </td>
+                <td>
+                    @if (item.Stock == 0){
+                        <span style="color: red"> Agotado </span>
+                    }
+                    else
+                    {
+
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    }
+
+
+                        
+                       
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
