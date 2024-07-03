@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ORTastic.Models.Compra>
+﻿@model IEnumerable<ORTastic.Models.CompraDetalle>
 
 @{
     ViewData["Title"] = "Mis Compras";
@@ -12,35 +12,21 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-             Nombre del Evento
-            </th>
-            <th>
-             Precio
-            </th>
-            <th>
-                Stock
-            </th>
-            <th></th>
+            <th>Nombre del Evento</th>
+            <th>Cantidad de Entradas</th>
+            <th>Precio Total</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioTotal)
-            </td>
-               
-          
-            <td>
-            
-                <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> 
-               
-            </td>
-        </tr>
-}
+        @foreach (var compra in Model)
+        {
+            <tr>
+
+                <td>@compra.NombreEvento</td>
+                <td>@compra.CantidadEntradas</td>
+                <td>@compra.PrecioTotal</td>
+                <td><a asp-action="Details" asp-route-id="@compra.IdCompra">Detalle</a></td>
+            </tr>
+        }
     </tbody>
 </table>

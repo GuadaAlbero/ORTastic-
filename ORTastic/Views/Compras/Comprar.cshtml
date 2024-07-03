@@ -1,84 +1,106 @@
-﻿@model IEnumerable<ORTastic.Models.Evento>
+﻿@model CompraViewModel
+
 @{
     ViewData["Title"] = "Realizar Compra";
 }
 
 <h1>Realizar Compra</h1>
 
+<!-- Mostrar los errores de validación -->
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
 
-
-<form asp-action="Create" method="post">
-
+<!-- Formulario para realizar la compra -->
+<form id="comprarForm" asp-action="Comprar" method="post">
+    @Html.AntiForgeryToken()
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    IdEvento
-                </th>
-                <th>
-                    Nombre del Evento
-                </th>
-                <th>
-                    Fecha y  Hora
-                </th>
-                <th>
-                    Equipos
-                </th>
-                <th>
-                    Precio
-                </th>
-
-                <th>
-                    <label>Cantidad de Entradas</label>
-                </th>
-                <th>
-
-                </th>
-
+                <th>IdEvento</th>
+                <th>Nombre del Evento</th>
+                <th>Fecha y Hora</th>
+                <th>Equipos</th>
+                <th>Precio</th>
+                <th>Stock Disponible</th>
+                <th>Cantidad de Entradas</th>
+                <th>Precio Total</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var evento in Model.Eventos)
             {
                 <tr>
+                    <td>@Html.DisplayFor(modelItem => evento.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => evento.Nombreevento)</td>
+                    <td>@Html.DisplayFor(modelItem => evento.Fecha)</td>
+                    <td>@Html.DisplayFor(modelItem => evento.Equipos)</td>
+                    <td>@Html.DisplayFor(modelItem => evento.Precio)</td>
+                    <td>@Html.DisplayFor(modelItem => evento.Stock)</td>
                     <td>
-                        @Html.DisplayFor(model => item.Id)
-
+                        <!-- Input para la cantidad de entradas -->
+                        <input type="number" class="cantidad-entradas" min="1" max="@evento.Stock" data-precio="@evento.Precio" data-eventoid="@evento.Id" required />
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.Nombreevento)
+                        <!-- Aquí calculamos el precio total en el cliente -->
+                        <span class="precio-total">@evento.Precio</span>
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.Fecha)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.Equipos)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.Precio)
-
-                    </td>
-
-                    <td>
-                        <input type="number" min="1" max="5">
-                    </td>
-                    <td>
-                        @if (item.Stock > 0)
-                        {
-                            <div class="form-group">
-                                <input type="hidden" name="EventoId" value="@item.Id">
-                                <input type="hidden" name="Precio" value="@item.Precio">
-                                <input type="submit" value="Comprar" class="btn btn-primary" />
-                            </div>
-                        }
-                        else
-                        {
-                            <span style="color: red"> AGOTADO </span>
-                        }
+                        <button type="button" class="btn btn-primary" onclick="comprar(@evento.Id, @evento.Precio)">Comprar</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <input type="hidden" id="EventoId" name="Compra.EventoId" />
+    <input type="hidden" id="CantidadEntradas" name="CantidadEntradas" />
+    <input type="hidden" id="PrecioTotal" name="Compra.Precio" />
 </form>
+
+@section Scripts {
+    <script>
+        function comprar(eventoId, precio) {
+            var form = document.getElementById('comprarForm');
+            var inputCantidad = document.querySelector('input[data-eventoid="' + eventoId + '"]');
+            var cantidad = inputCantidad.value;
+            var precioTotal = cantidad * precio;
+
+            if (isNaN(precioTotal) || precioTotal <= 0) {
+                alert("Por favor, ingrese una cantidad válida de entradas.");
+                return;
+            }
+
+            // Llenar los campos ocultos con los datos del evento seleccionado
+            document.getElementById('EventoId').value = eventoId;
+            document.getElementById('CantidadEntradas').value = cantidad;
+            document.getElementById('PrecioTotal').value = precioTotal;
+
+            // Enviar el formulario
+            form.submit();
+        }
+
+        document.addEventListener('input', function (event) {
+            if (event.target.classList.contains('cantidad-entradas')) {
+                var row = event.target.closest('tr');
+                var precio = parseFloat(event.target.getAttribute('data-precio'));
+                var cantidad = parseInt(event.target.value);
+                var precioTotal = precio * cantidad;
+                if (!isNaN(precioTotal)) {
+                    row.querySelector('.precio-total').innerText = precioTotal.toFixed(2);
+                } else {
+                    row.querySelector('.precio-total').innerText = '0.00';
+                }
+            }
+        });
+    </script>
+}
 

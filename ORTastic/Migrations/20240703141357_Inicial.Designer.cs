@@ -12,7 +12,7 @@ using ORTastic.Context;
 namespace ORTastic.Migrations
 {
     [DbContext(typeof(ORTasticDatabaseContext))]
-    [Migration("20240629211039_Inicial")]
+    [Migration("20240703141357_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -33,20 +33,19 @@ namespace ORTastic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CantidadEntradas")
+                        .HasColumnType("int");
+
                     b.Property<int>("EventoId")
                         .HasColumnType("int");
 
-                    b.Property<float>("PrecioTotal")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventoId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Compras");
                 });
@@ -70,8 +69,8 @@ namespace ORTastic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Precio")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -103,25 +102,6 @@ namespace ORTastic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("ORTastic.Models.Compra", b =>
-                {
-                    b.HasOne("ORTastic.Models.Evento", "Eventos")
-                        .WithMany()
-                        .HasForeignKey("EventoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ORTastic.Models.User", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Eventos");
-
-                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }
